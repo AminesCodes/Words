@@ -6,6 +6,15 @@ function App() {
   const [targetWord, setTargetWord] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [display, setDisplay] = useState('');
+  const [tempD, setTempD] = useState('block');
+  const [timeOp, setTimeOp] = useState('3000');
+  const times = ['1000', '2000', '3000', '4000', '5000', '6000', '7000'];
+
+  const tempDisplay = () => {
+    setTimeout(() => {
+      setTempD('none');
+    }, 3000);
+  }
 
   const nextWord = (list) => {
     if (!list.length) {
@@ -13,10 +22,13 @@ function App() {
       setTargetWord('');
     } else {
       const listCopy = [...list];
+      listCopy.filter(wrd => wrd !== '')
       const randomIndex = Math.floor(Math.random() * list.length);
       const randomWord = listCopy.splice(randomIndex, 1)[0];
       setTargetWord(randomWord);
       setWords(listCopy);
+      setTempD('block');
+      tempDisplay();
     }
   }
 
@@ -40,14 +52,14 @@ function App() {
 
   return (
     <div className="App">
+      <div style={{height: '10vh'}}></div>
       {
         submitted
         ? <>
-            <p className={display}>{targetWord.trim()}</p>
             <button onClick={() => nextWord(words)}>Suivant</button>
+            <p className={display} style={{display: tempD}}>{targetWord.trim()}</p>
           </>
         : <>
-            <div style={{height: '10vh'}}></div>
             <label htmlFor='textInput'>Veuillez saisir la list de mot (séparez les mots par une virgule)</label>
             <input id='textInput' type='text' value={input} onChange={e => setInput(e.target.value)} />
             <button onClick={handleSubmit}>Valider</button>
@@ -65,6 +77,13 @@ function App() {
               <label htmlFor='allCaps' >Tout majuscule</label> <br />
             </div>
 
+            <hr />
+            <span>
+              Temps d'affichage (s): 
+              <select value={timeOp} onChange={e => setTimeOp(e.target.value)}> 
+                {times.map(t => <option key={t} value={t}>{t[0]}</option>)}
+              </select>
+            </span>
           </>
         
       }
