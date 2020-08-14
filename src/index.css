@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Chango&display=swap');
+@font-face {
+  font-family: 'Chango';
+  src: url('/assets/fonts/Chango-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
   margin: 0;
@@ -34,6 +39,7 @@ p {
   font-size: 10vw;
   font-weight: bolder;
   color: #0e1979;
+  overflow: auto;
 }
 
 button {
