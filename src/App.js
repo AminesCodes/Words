@@ -37,9 +37,7 @@ function App() {
 
   })
 
-console.log(display === '')
-console.log(display === 'firstCap')
-console.log(display === 'allCaps')
+
   return (
     <div className="App">
       {
@@ -55,16 +53,18 @@ console.log(display === 'allCaps')
             <button onClick={handleSubmit}>Valider</button>
             
             <hr />
-            <span>Style d'affichage:</span><br />
+            <span style={{verticalAlign: 'top'}}>Style d'affichage:</span>
+            <div style={{display: 'inline-block', textAlign: 'left'}}>
+              <input type='radio' id='original' name='display' checked={display === ''} onChange={() => setDisplay('')} />
+              <label htmlFor='original' >Texte original</label> <br />
 
-            <input type='radio' id='original' name='display' checked={display === ''} onChange={() => setDisplay('')} />
-            <label htmlFor='original' style={{marginRight: '20px'}} >Texte original</label>
+              <input type='radio' id='firstCap' name='display' checked={display === 'firstCap'} onChange={() => setDisplay('firstCap')} />
+              <label htmlFor='firstCap' >1ere letter majuscule</label> <br />
 
-            <input type='radio' id='firstCap' name='display' checked={display === 'firstCap'} onChange={() => setDisplay('firstCap')} />
-            <label htmlFor='firstCap' style={{marginRight: '20px'}} >1ere letter majuscule</label>
+              <input type='radio' id='allCaps' name='display' checked={display === 'allCaps'} onChange={() => setDisplay('allCaps')} />
+              <label htmlFor='allCaps' >Tout majuscule</label> <br />
+            </div>
 
-            <input type='radio' id='allCaps' name='display' checked={display === 'allCaps'} onChange={() => setDisplay('allCaps')} />
-            <label htmlFor='allCaps' style={{marginRight: '20px'}} >Tout majuscule</label>
           </>
         
       }
