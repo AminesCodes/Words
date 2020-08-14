@@ -5,6 +5,7 @@ function App() {
   const [input, setInput] = useState('');
   const [targetWord, setTargetWord] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [display, setDisplay] = useState('');
 
   const nextWord = (list) => {
     if (!list.length) {
@@ -36,21 +37,34 @@ function App() {
 
   })
 
-
+console.log(display === '')
+console.log(display === 'firstCap')
+console.log(display === 'allCaps')
   return (
     <div className="App">
       {
         submitted
         ? <>
-            <p>{targetWord.trim()}</p>
+            <p className={display}>{targetWord.trim()}</p>
             <button onClick={() => nextWord(words)}>Suivant</button>
           </>
         : <>
-            <label>
-              Veuillez saisir la list de mot (séparez les mots par une virgule)
-              <input value={input} onChange={e => setInput(e.target.value)} />
-            </label>
+            <div style={{height: '10vh'}}></div>
+            <label htmlFor='textInput'>Veuillez saisir la list de mot (séparez les mots par une virgule)</label>
+            <input id='textInput' type='text' value={input} onChange={e => setInput(e.target.value)} />
             <button onClick={handleSubmit}>Valider</button>
+            
+            <hr />
+            <span>Style d'affichage:</span>
+
+            <input type='radio' id='original' name='display' checked={display === ''} onChange={() => setDisplay('')} />
+            <label htmlFor='original'>Texte original</label>
+
+            <input type='radio' id='firstCap' name='display' checked={display === 'firstCap'} onChange={() => setDisplay('firstCap')} />
+            <label htmlFor='firstCap'>1ere letter majuscule</label>
+
+            <input type='radio' id='allCaps' name='display' checked={display === 'allCaps'} onChange={() => setDisplay('allCaps')} />
+            <label htmlFor='allCaps'>Tout majuscule</label>
           </>
         
       }
