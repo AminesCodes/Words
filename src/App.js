@@ -23,7 +23,6 @@ function App() {
     fWeight = 'bolder';
   }
 
-  // let timedDisplay = null;
   const tempDisplay = () => {
     clearTimeout(timedDisplay)
     const temp = setTimeout(() => {
