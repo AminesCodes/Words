@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+// import useFitText from "use-fit-text";
+// import FitText from '@kennethormandy/react-fittext'
 
 function App() {
   const [words, setWords] = useState([]);
@@ -8,12 +10,17 @@ function App() {
   const [display, setDisplay] = useState('');
   const [tempD, setTempD] = useState('block');
   const [timeOp, setTimeOp] = useState('3000');
+  const [fSize, setFSize] = useState('50');
+  const [fFamily, setFFamily] = useState('Isabella');
+  
   const times = ['1000', '2000', '3000', '4000', '5000', '6000', '7000'];
+  const fonts = ['Anton', 'Bowlby One SC', 'Isabella', ]
+  // const { fontSize, ref } = useFitText({ maxFontSize: 1500, minFontSize: 500});
 
   const tempDisplay = () => {
     setTimeout(() => {
-      setTempD('none');
-    }, 3000);
+      // setTempD('none');
+    }, Number(timeOp));
   }
 
   const nextWord = (list) => {
@@ -21,8 +28,7 @@ function App() {
       setSubmitted(false);
       setTargetWord('');
     } else {
-      const listCopy = [...list];
-      listCopy.filter(wrd => wrd !== '')
+      let listCopy = [...list];
       const randomIndex = Math.floor(Math.random() * list.length);
       const randomWord = listCopy.splice(randomIndex, 1)[0];
       setTargetWord(randomWord);
@@ -34,7 +40,9 @@ function App() {
 
   const handleSubmit = () => {
     if (input.length) {
-      const wordsList = input.split(',')
+      let wordsList = input.split(',');
+      wordsList = wordsList.filter(wrd => wrd !== '');
+      wordsList = wordsList.map(wrd => wrd.trim());
       setWords(wordsList);
       setInput('');
       setSubmitted(true);
@@ -49,20 +57,38 @@ function App() {
 
   })
 
-
   return (
     <div className="App">
       <div style={{height: '10vh'}}></div>
       {
         submitted
         ? <>
-            <button onClick={() => nextWord(words)}>Suivant</button>
-            <p className={display} style={{display: tempD}}>{targetWord.trim()}</p>
+            <div className='tools'>
+              <label>Taille Texte
+                <input type='range' id='fontSize' min='100' max='850'  onChange={e => setFSize(e.target.value)} />
+              </label>
+              <label> Font: 
+                <select value={fFamily} onChange={e => setFFamily(e.target.value)}> 
+                  {fonts.map(font => <option key={font} value={font}>{font}</option>)}
+                </select>
+              </label>
+              <span><button onClick={() => nextWord(words)}>Suivant</button></span>
+            </div>
+
+            <div id='word' className={display} style={{display: tempD, fontFamily: fFamily, fontSize: `${fSize}px`, marginTop: 20}}>
+            {/* <div id='word' ref={ref} className={display} style={{fontSize, display: tempD, marginTop: 20}}> */}
+              {targetWord}
+            </div>
+            {/* <FitText minFontSize={800} maxFontSize={2000} id='word' className={display} style={{display: tempD, marginTop: 20}}>
+              {targetWord}
+            </FitText> */}
           </>
         : <>
-            <label htmlFor='textInput'>Veuillez saisir la list de mot (séparez les mots par une virgule)</label>
-            <input id='textInput' type='text' value={input} onChange={e => setInput(e.target.value)} />
-            <button onClick={handleSubmit}>Valider</button>
+            <form onSubmit={handleSubmit} >
+              <label htmlFor='textInput'>Veuillez saisir la list de mot (séparez les mots par une virgule)</label>
+              <input id='textInput' type='text' value={input} onChange={e => setInput(e.target.value)} />
+              <button >Valider</button>
+            </form>
             
             <hr />
             <span style={{verticalAlign: 'top'}}>Style d'affichage:</span>
@@ -79,7 +105,7 @@ function App() {
 
             <hr />
             <span>
-              Temps d'affichage (s): 
+              Temps d'affichage (sec): 
               <select value={timeOp} onChange={e => setTimeOp(e.target.value)}> 
                 {times.map(t => <option key={t} value={t}>{t[0]}</option>)}
               </select>
