@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import useFitText from "use-fit-text";
 // import FitText from '@kennethormandy/react-fittext'
 
@@ -15,6 +15,7 @@ function App() {
   
   const times = ['1000', '2000', '3000', '4000', '5000', '6000', '7000'];
   const fonts = ['Anton', 'Bowlby One SC', 'Isabella', 'Isabelle']
+  const [timedDisplay, setTimedDisplay] = useState(null);
   // const { fontSize, ref } = useFitText({ maxFontSize: 1500, minFontSize: 500});
 
   let fWeight = 'normal';
@@ -22,10 +23,13 @@ function App() {
     fWeight = 'bolder';
   }
 
+  // let timedDisplay = null;
   const tempDisplay = () => {
-    setTimeout(() => {
+    clearTimeout(timedDisplay)
+    const temp = setTimeout(() => {
       setTempD('none');
     }, Number(timeOp));
+    setTimedDisplay(temp)
   }
 
   const nextWord = (list) => {
@@ -34,7 +38,7 @@ function App() {
       setTargetWord('');
     } else {
       let listCopy = [...list];
-      const randomIndex = Math.floor(Math.random() * list.length);
+      const randomIndex = Math.floor(Math.random() * listCopy.length);
       const randomWord = listCopy.splice(randomIndex, 1)[0];
       setTargetWord(randomWord);
       setWords(listCopy);
@@ -57,10 +61,6 @@ function App() {
     }
   }
 
-
-  useEffect(() => {
-
-  })
 
   return (
     <div className="App">
