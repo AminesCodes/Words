@@ -13,6 +13,13 @@
 }
 
 @font-face {
+  font-family: 'Isabelle';
+  src: url('/assets/fonts/Isabelle.otf') format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Anton';
   src: url('/assets/fonts/Anton-Regular.ttf') format('truetype');
   font-weight: normal;
@@ -46,9 +53,9 @@ input[type='text'] {
 
 #word {
   width: 100vw;
-  /* height: 50vw; */
   color: #0e1979;
   vertical-align: top;
+  margin-top: 10px;
 }
 
 button {

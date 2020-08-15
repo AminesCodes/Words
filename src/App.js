@@ -10,12 +10,17 @@ function App() {
   const [display, setDisplay] = useState('');
   const [tempD, setTempD] = useState('block');
   const [timeOp, setTimeOp] = useState('3000');
-  const [fSize, setFSize] = useState('50');
-  const [fFamily, setFFamily] = useState('Isabella');
+  const [fSize, setFSize] = useState('250');
+  const [fFamily, setFFamily] = useState('Isabelle');
   
   const times = ['1000', '2000', '3000', '4000', '5000', '6000', '7000'];
-  const fonts = ['Anton', 'Bowlby One SC', 'Isabella', ]
+  const fonts = ['Anton', 'Bowlby One SC', 'Isabella', 'Isabelle']
   // const { fontSize, ref } = useFitText({ maxFontSize: 1500, minFontSize: 500});
+
+  let fWeight = 'normal';
+  if (fFamily === 'Isabelle') {
+    fWeight = 'bolder';
+  }
 
   const tempDisplay = () => {
     setTimeout(() => {
@@ -65,9 +70,9 @@ function App() {
         ? <>
             <div className='tools'>
               <label>Taille Texte
-                <input type='range' id='fontSize' min='100' max='850'  onChange={e => setFSize(e.target.value)} />
+                <input type='range' id='fontSize' min='100' max='850' value={fSize}  onChange={e => setFSize(e.target.value)} />
               </label>
-              <label> Font: 
+              <label> Police du text: 
                 <select value={fFamily} onChange={e => setFFamily(e.target.value)}> 
                   {fonts.map(font => <option key={font} value={font}>{font}</option>)}
                 </select>
@@ -75,7 +80,7 @@ function App() {
               <span><button onClick={() => nextWord(words)}>Suivant</button></span>
             </div>
 
-            <div id='word' className={display} style={{display: tempD, fontFamily: fFamily, fontSize: `${fSize}px`, marginTop: 20}}>
+            <div id='word' className={display} style={{display: tempD, fontFamily: fFamily, fontSize: `${fSize}px`, fontWeight: fWeight}}>
             {/* <div id='word' ref={ref} className={display} style={{fontSize, display: tempD, marginTop: 20}}> */}
               {targetWord}
             </div>
