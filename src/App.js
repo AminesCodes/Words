@@ -24,7 +24,7 @@ function App() {
 
   const tempDisplay = () => {
     setTimeout(() => {
-      // setTempD('none');
+      setTempD('none');
     }, Number(timeOp));
   }
 
